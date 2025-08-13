@@ -97,7 +97,7 @@ class App {
         this.app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
         // Request logging middleware
-        this.app.use((req: Request, res: Response, next) => {
+        this.app.use((req: Request, _res: Response, next) => {
             console.log(`${new Date().toISOString()} - ${req.method} ${req.path} - ${req.ip}`);
             next();
         });

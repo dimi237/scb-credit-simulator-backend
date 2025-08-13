@@ -4,12 +4,12 @@ import { MongoService } from '../services/mongo.service';
 
 export function initSampleRoutes(app: express.Application, mongoService: MongoService): void {
       // Health check route
-        app.get('/health', (req: Request, res: Response) => {
+        app.get('/health', (_req: Request, res: Response) => {
             res.json({ status: 'OK', timestamp: new Date().toISOString() });
         });
 
         // Get all sample data
-        app.get('/api/data', async (req: Request, res: Response) => {
+        app.get('/api/data', async (_req: Request, res: Response) => {
             try {
                 const collection = mongoService.getCollection();
                 const data = await collection.find({}).toArray();
@@ -50,14 +50,14 @@ export function initSampleRoutes(app: express.Application, mongoService: MongoSe
                     data: data
                 };
 
-                res.json(response);
+                return res.json(response);
             } catch (error) {
                 console.error('Error fetching data by ID:', error);
                 const response: ApiResponse<null> = {
                     success: false,
                     message: 'Failed to fetch data'
                 };
-                res.status(500).json(response);
+                return res.status(500).json(response);
             }
         });
 
@@ -120,14 +120,14 @@ export function initSampleRoutes(app: express.Application, mongoService: MongoSe
                     message: 'Data updated successfully'
                 };
 
-                res.json(response);
+                return res.json(response);
             } catch (error) {
                 console.error('Error updating data:', error);
                 const response: ApiResponse<null> = {
                     success: false,
                     message: 'Failed to update data'
                 };
-                res.status(500).json(response);
+                return res.status(500).json(response);
             }
         });
 
@@ -151,19 +151,19 @@ export function initSampleRoutes(app: express.Application, mongoService: MongoSe
                     message: 'Data deleted successfully'
                 };
 
-                res.json(response);
+                return res.json(response);
             } catch (error) {
                 console.error('Error deleting data:', error);
                 const response: ApiResponse<null> = {
                     success: false,
                     message: 'Failed to delete data'
                 };
-                res.status(500).json(response);
+                return res.status(500).json(response);
             }
         });
 
         // Seed sample data
-        app.post('/api/seed', async (req: Request, res: Response) => {
+        app.post('/api/seed', async (_req: Request, res: Response) => {
             try {
                 const sampleData: Omit<SampleData, '_id'>[] = [
                     {
