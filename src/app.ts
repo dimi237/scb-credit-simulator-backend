@@ -4,16 +4,19 @@ import { MongoService } from './services/mongo.service';
 import { initSampleRoutes } from './routes/sample.routes';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import { EmailService } from './services/email.service';
 
 class App {
     public app: express.Application;
     private mongoService: MongoService;
+    private emailService: EmailService;
 
     constructor() {
         this.app = express();
         this.mongoService = new MongoService(
             process.env['MONGODB_URI'] || 'mongodb://localhost:27017'
         );
+        this.emailService = new EmailService();
         this.initializeMiddlewares();
         this.initializeRoutes();
     }
@@ -113,7 +116,7 @@ class App {
     }
 
     private initializeRoutes(): void {
-        initSampleRoutes(this.app, this.mongoService);
+        initSampleRoutes(this.app, this.mongoService, this.emailService);
     }
 
     public async start(port: number): Promise<void> {

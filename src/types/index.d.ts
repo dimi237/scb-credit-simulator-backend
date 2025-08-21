@@ -10,3 +10,16 @@ interface ApiResponse<T> {
   data?: T;
   message?: string;
 }
+
+interface EmailRequest {
+  to: string;
+  subject: string;
+  message: string;
+  type?: 'welcome' | 'notification' | 'custom';
+}
+
+interface EmailTemplate {
+  subject: string;
+  html: string;
+  text: string;
+}
