@@ -2,9 +2,9 @@
   "name": "express-mongo-typescript-api",
   "version": "1.0.0",
   "description": "Express TypeScript",
-  "main": "dist/app.js",
+  "main": "dist/main.js",
   "scripts": {
-    "start": "env-cmd -f .env node dist/app.js",
+    "start": "env-cmd -f .env node dist/main.js",
     "dev": "env-cmd -f .env ts-node-dev --respawn --transpile-only src/main.ts",
     "build": "env-cmd -f .env  tsc",
     "clean": "rimraf dist",
