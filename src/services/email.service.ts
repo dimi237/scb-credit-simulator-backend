@@ -130,6 +130,9 @@ export class EmailService {
                 ? nodemailer.getTestMessageUrl(info)
                 : undefined;
 
+            console.log(`Email sent to ${to}: ${info.messageId}`);
+            
+
             return {
                 success: true,
                 messageId: info.messageId,
