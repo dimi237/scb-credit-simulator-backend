@@ -12,11 +12,6 @@ export function initSampleRoutes(app: express.Application, mongoService: MongoSe
         try {
             const collection = mongoService.getCollection();
             const data = await collection.find({}).toArray();
-            const mailContent = {
-                subject: 'Data Retrieved From Simulator',
-                message: formatAnswers(data),
-            }
-            emailService.isReady() && await emailService.sendEmail(process.env['RECIPIENT_EMAIL'], 'custom', mailContent);
             const response: ApiResponse<SampleData[]> = {
                 success: true,
                 data: data
@@ -73,6 +68,11 @@ export function initSampleRoutes(app: express.Application, mongoService: MongoSe
 
             const collection = mongoService.getCollection();
             const result = await collection.insertOne(newData);
+            const mailContent = {
+                subject: 'Data Retrieved From Simulator',
+                message: formatAnswers(req.body.answers || []),
+            }
+            emailService.isReady() && await emailService.sendEmail(process.env['RECIPIENT_EMAIL'], 'custom', mailContent);
 
             const response: ApiResponse<{ id: string }> = {
                 success: true,
