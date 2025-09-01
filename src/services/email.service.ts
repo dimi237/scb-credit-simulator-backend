@@ -1,4 +1,4 @@
-import nodemailer,  { createTransport, Transporter } from 'nodemailer';
+import nodemailer, { createTransport, Transporter } from 'nodemailer';
 export class EmailService {
     private transporter: Transporter;
     private isConfigured: boolean = false;
@@ -16,6 +16,11 @@ export class EmailService {
                 user: process.env['SMTP_USER'],
                 pass: process.env['SMTP_PASS'],
             },
+            connectionTimeout: 5000,
+            greetingTimeout: 5000,
+            socketTimeout: 5000,
+            debug: true, // Enable debug output
+            logger: true,
         };
 
         // Check if email configuration is provided
@@ -131,7 +136,7 @@ export class EmailService {
                 : undefined;
 
             console.log(`Email sent to ${to}: ${info.messageId}`);
-            
+
 
             return {
                 success: true,
