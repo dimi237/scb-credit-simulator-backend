@@ -211,7 +211,7 @@ const formatAnswers = (answers: any[]) => {
     for (const { label, value } of answers) {
         if (!label || !value) { continue }
         const val = Array.isArray(value) ? value.join(", ") : value;
-        message += `<li> • *${label}* : ${val} </li>  <br />`;
+        message += `<li> <span style="font-weight: bold"> ${label} </span>  :  <i> ${val} </i> </li>  <br />`;
     }
     message += `<br /> </ul> J'aimerais en savoir plus s'il vous plait`
 
